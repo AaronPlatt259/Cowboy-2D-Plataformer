@@ -19,6 +19,24 @@ class Player:
 
 def main():
     pygame.init()
+    pygame.display.set_caption("Cowboy Game")
+    clock = pygame.time.Clock()
+    dt = 0
+    resolution = (800, 600)
+    screen = pygame.display.set_mode(resolution)
+
+    #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    player = Player()
+
+    #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+    player.draw(screen)
+    pygame.display.flip()
 
 if __name__ == "__main__":
     main()
