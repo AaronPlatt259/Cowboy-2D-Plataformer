@@ -50,10 +50,11 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
     
-    screen.fill('Green')
-    bg.draw(screen)
-    player.draw(screen)
-    pygame.display.flip()
-
+        screen.fill('Green')
+        bg.draw(screen)
+        player.draw(screen)
+        pygame.display.flip()
+    pygame.quit()
+    
 if __name__ == "__main__":
     main()
