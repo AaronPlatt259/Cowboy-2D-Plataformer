@@ -23,6 +23,7 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
     resolution = (800, 600)
+    bg = pygame.image.load('bg_placeholder.jpg')
     screen = pygame.display.set_mode(resolution)
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -34,7 +35,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
+    
+    screen.fill(bg)
     player.draw(screen)
     pygame.display.flip()
 
