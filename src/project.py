@@ -11,7 +11,7 @@ class Player:
        
     def image(self):
         img = pygame.image.load('cowboy_placeholder.png').convert_alpha()
-        img = pygame.transform.scale(img, (self.x_axis//2, self.y_axis//2))
+        #img = pygame.transform.scale(img, (self.x_axis//2, self.y_axis//2))
         return img
 
     def draw(self, surface):
