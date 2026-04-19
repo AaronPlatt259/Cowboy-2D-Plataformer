@@ -16,7 +16,7 @@ class Player:
         return img
     
     def get_rectangle(self):
-        rectangle = self.img.get_rect(topleft=(204,254)) 
+        rectangle = self.img.get_rect(topleft=(100,250)) 
         return rectangle
 
     def update(self, keys):
