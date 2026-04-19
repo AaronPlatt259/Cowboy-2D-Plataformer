@@ -3,11 +3,12 @@ import random
 
 
 class Player:
-    def __init__(self, pos=(0,0),x_axis=120, y_axis = 100):
+    def __init__(self, pos=(0,0),x_axis=120, y_axis = 100, speed = 5):
         self.x_axis = x_axis
         self.y_axis = y_axis
         self.pos = pos
         self.img = self.image()
+        self.speed = speed
        
     def image(self):
         img = pygame.image.load('cowboy_placeholder.png').convert_alpha()
@@ -49,8 +50,16 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-    
-        screen.fill('Green')
+
+     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        keys = pygame.key.get_pressed()
+        if keys [pygame.K_LEFT]:
+            player = Player(pos=(100-5, 250))
+        if keys [pygame.K_RIGHT]:
+            player = Player(pos=(100+5, 250))
+     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        screen.fill('Black')
         bg.draw(screen)
         player.draw(screen)
         pygame.display.flip()
