@@ -3,17 +3,28 @@ import random
 
 
 class Player:
-    def __init__(self, pos=(0,0),x_axis=120, y_axis = 100, speed = 5):
+    def __init__(self ,x_axis=120, y_axis = 100, speed = 5):
         self.x_axis = x_axis
         self.y_axis = y_axis
-        self.pos = pos
-        self.img = self.image()
+        self.img = self.load_image()
+        self.pos = self.get_rectangle()
         self.speed = speed
        
-    def image(self):
+    def load_image(self):
         img = pygame.image.load('cowboy_placeholder.png').convert_alpha()
         #img = pygame.transform.scale(img, (self.x_axis//2, self.y_axis//2))
         return img
+    
+    def get_rectangle(self):
+        rectangle = self.img.get_rect(topleft=(204,254)) 
+        return rectangle
+
+    def update(self, keys):
+        if keys [pygame.K_LEFT]:
+           self.pos.x -= self.speed
+        if keys [pygame.K_RIGHT]:
+            self.pos.x += self.speed
+
 
     def draw(self, surface):
         surface.blit(self.img, self.pos)
@@ -41,7 +52,7 @@ def main():
     screen = pygame.display.set_mode(resolution)
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-    player = Player(pos=(100,250))
+    player = Player()
     bg = Background(pos=(0,0))
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -53,16 +64,15 @@ def main():
 
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         keys = pygame.key.get_pressed()
-        if keys [pygame.K_LEFT]:
-            player = Player(pos=(100-5, 250))
-        if keys [pygame.K_RIGHT]:
-            player = Player(pos=(100+5, 250))
+        player.update(keys)
+
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         screen.fill('Black')
         bg.draw(screen)
         player.draw(screen)
         pygame.display.flip()
+        dt = clock.tick(24)
     pygame.quit()
     
 if __name__ == "__main__":
