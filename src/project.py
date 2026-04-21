@@ -29,6 +29,27 @@ class Player:
     def draw(self, surface):
         surface.blit(self.img, self.pos)
 
+class Enemy:
+    def __init__(self ,x_axis=120, y_axis = 100, speed = 5):
+        self.x_axis = x_axis
+        self.y_axis = y_axis
+        self.img = self.load_image()
+        self.pos = self.get_rectangle()
+        self.speed = speed
+
+    def load_image(self):
+        img = pygame.image.load('enemy_placeholder.png').convert_alpha()
+        #img = pygame.transform.scale(img, (self.x_axis//2, self.y_axis//2))
+        return img
+    
+    def get_rectangle(self):
+        rectangle = self.img.get_rect(topleft=(100,800)) 
+        return rectangle
+    
+    def update(self, running):
+        if running == True:
+            self.img -= self.speed
+
 class Background:
         def __init__(self, pos=(0,0),x_axis=120, y_axis = 100):
             self.x_axis = x_axis
@@ -54,7 +75,7 @@ def main():
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     player = Player()
     bg = Background(pos=(0,0))
-
+    enemy = Enemy()
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     running = True
     while running:
@@ -65,7 +86,7 @@ def main():
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         keys = pygame.key.get_pressed()
         player.update(keys)
-
+        enemy.update(running)
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         screen.fill('Black')
