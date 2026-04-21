@@ -49,6 +49,7 @@ class Enemy:
     def update(self, running):
         if running == True:
             self.pos.x -= self.speed
+
     
     def draw(self, surface):
         surface.blit(self.img, self.pos)
