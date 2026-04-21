@@ -43,7 +43,7 @@ class Enemy:
         return img
     
     def get_rectangle(self):
-        rectangle = self.img.get_rect(topleft=(100,800)) 
+        rectangle = self.img.get_rect(topleft=(600,280)) 
         return rectangle
     
     def update(self, running):
