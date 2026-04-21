@@ -48,7 +48,10 @@ class Enemy:
     
     def update(self, running):
         if running == True:
-            self.img -= self.speed
+            self.pos.x -= self.speed
+    
+    def draw(self, surface):
+        surface.blit(self.img, self.pos)
 
 class Background:
         def __init__(self, pos=(0,0),x_axis=120, y_axis = 100):
@@ -91,6 +94,7 @@ def main():
 
         screen.fill('Black')
         bg.draw(screen)
+        enemy.draw(screen)
         player.draw(screen)
         pygame.display.flip()
         dt = clock.tick(24)
