@@ -38,12 +38,12 @@ class Enemy:
         self.speed = speed
 
     def load_image(self):
-        img = pygame.image.load('enemy_placeholder.png').convert_alpha()
+        img = pygame.image.load('enemy_01.png').convert_alpha()
         #img = pygame.transform.scale(img, (self.x_axis//2, self.y_axis//2))
         return img
     
     def get_rectangle(self):
-        rectangle = self.img.get_rect(topleft=(600,280)) 
+        rectangle = self.img.get_rect(topleft=(600,360)) 
         return rectangle
     
     def update(self, running):
