@@ -30,15 +30,16 @@ class Player:
         surface.blit(self.img, self.pos)
 
 class Enemy:
-    def __init__(self ,x_axis=120, y_axis = 100, speed = 5):
+    def __init__(self ,x_axis=120, y_axis = 100, speed = 5, enemy_update = 'enemy_01.png'):
         self.x_axis = x_axis
         self.y_axis = y_axis
+        self.enemy = enemy_update
         self.img = self.load_image()
         self.pos = self.get_rectangle()
         self.speed = speed
-
+        
     def load_image(self):
-        img = pygame.image.load('enemy_03.png').convert_alpha()
+        img = pygame.image.load(self.enemy).convert_alpha()
         #img = pygame.transform.scale(img, (self.x_axis//2, self.y_axis//2))
         return img
     
@@ -51,12 +52,18 @@ class Enemy:
             self.pos.x -= self.speed
 
     def update_variation(self, keys):
-        if keys [pygame.K_0]:
-            enemy = 'enemy_01.png'
-        if keys [pygame.K_1]:
-            enemy = 'enemy_02.png'
-        if keys [pygame.K_2]:
-            enemy = 'enemy_03.png'
+        variations = {
+          pygame.K_0: 'enemy_01.png',
+          pygame.K_1: 'enemy_02.png',
+          pygame.K_2: 'enemy_03.png'
+        }
+
+        for key, filename in variations.items():
+            if keys[key]:
+                if self.enemy != filename:
+                    self.enemy = filename
+                    self.img = self.load_image()
+                break
 
     
     def draw(self, surface):
@@ -83,7 +90,6 @@ def main():
     dt = 0
     resolution = (800, 600)
     screen = pygame.display.set_mode(resolution)
-    enemy = 'enemy_01.png'
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     player = Player()
@@ -100,6 +106,7 @@ def main():
         keys = pygame.key.get_pressed()
         player.update(keys)
         enemy.update(running)
+        #enemy.update_variation(keys)
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         screen.fill('Black')
