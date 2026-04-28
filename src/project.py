@@ -106,7 +106,7 @@ def main():
         keys = pygame.key.get_pressed()
         player.update(keys)
         enemy.update(running)
-        #enemy.update_variation(keys)
+        enemy.update_variation(keys)
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         screen.fill('Black')
