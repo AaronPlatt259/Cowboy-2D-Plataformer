@@ -50,6 +50,14 @@ class Enemy:
         if running == True:
             self.pos.x -= self.speed
 
+    def update_variation(self, keys):
+        if keys [pygame.K_0]:
+            enemy = 'enemy_01.png'
+        if keys [pygame.K_1]:
+            enemy = 'enemy_02.png'
+        if keys [pygame.K_2]:
+            enemy = 'enemy_03.png'
+
     
     def draw(self, surface):
         surface.blit(self.img, self.pos)
@@ -62,7 +70,7 @@ class Background:
             self.ground = self.image()
        
         def image(self):
-            img = pygame.image.load('bg_placeholder.jpg')
+            img = pygame.image.load('bg_03.jpg')
             #img = pygame.transform.scale(img, (self.x_axis*100, self.y_axis*100))
             return img
 
@@ -75,6 +83,7 @@ def main():
     dt = 0
     resolution = (800, 600)
     screen = pygame.display.set_mode(resolution)
+    enemy = 'enemy_01.png'
 
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     player = Player()
