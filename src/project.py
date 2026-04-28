@@ -70,16 +70,31 @@ class Enemy:
         surface.blit(self.img, self.pos)
 
 class Background:
-        def __init__(self, pos=(0,0),x_axis=120, y_axis = 100):
+        def __init__(self, pos=(0,0),x_axis=120, y_axis = 100, bg_update = 'bg_01.jpg'):
             self.x_axis = x_axis
             self.y_axis = y_axis
+            self.bg = bg_update
             self.pos = pos
             self.ground = self.image()
        
         def image(self):
-            img = pygame.image.load('bg_03.jpg')
+            img = pygame.image.load(self.bg)
             #img = pygame.transform.scale(img, (self.x_axis*100, self.y_axis*100))
             return img
+        
+        def update_variation(self, keys):
+            variations = {
+            pygame.K_3: 'bg_01.jpg',
+            pygame.K_4: 'bg_02.jpg',
+            pygame.K_5: 'bg_03.jpg'
+        }
+            
+            for key, filename in variations.items():
+                if keys[key]:
+                    if self.bg != filename:
+                        self.bg = filename
+                        self.ground = self.image()
+                    break
 
         def draw(self, surface):
             surface.blit(self.ground, self.pos)
@@ -104,6 +119,7 @@ def main():
 
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         keys = pygame.key.get_pressed()
+        bg.update_variation(keys)
         player.update(keys)
         enemy.update(running)
         enemy.update_variation(keys)
