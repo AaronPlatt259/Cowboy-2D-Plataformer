@@ -42,8 +42,9 @@ class Player:
 
     def update(self, keys, enemy):
         moving = False
-        if self.pos.colliderect(enemy.pos):
-            print("collision activated")
+        #if self.pos.colliderect(enemy.pos):
+            #print("collision activated")
+
 
         if keys [pygame.K_LEFT]:
            self.pos.x -= self.speed
@@ -109,8 +110,8 @@ class Enemy:
         
     
     def get_rectangle(self):
-        rectangle = self.img.get_rect(topleft=(600,360)) 
-        return rectangle#.inflate(-45, -45)
+        rectangle = self.img.get_rect(topleft=(600,342)) 
+        return rectangle.inflate(-55, -55)
     
     def update(self, running):
         if running == True:
@@ -177,7 +178,7 @@ def main():
     dt = 0
     resolution = (800, 600)
     screen = pygame.display.set_mode(resolution)
-
+    game_over = False
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     player = Player()
     bg = Background(pos=(0,0))
@@ -190,19 +191,26 @@ def main():
                 running = False
 
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
         keys = pygame.key.get_pressed()
         bg.update_variation(keys)
         player.update(keys, enemy)
         enemy.update(running)
         enemy.update_variation(keys)
-     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        screen.fill('Black')
-        bg.draw(screen)
-        enemy.draw(screen)
-        player.draw(screen)
-        pygame.display.flip()
-        dt = clock.tick(24)
+#- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        if player.pos.colliderect(enemy.pos):
+            print("collision activated")
+            game_over == True
+        
+        if game_over:
+            bg == screen.fill((0, 0, 0))
+        else:
+            screen.fill('Black')
+            bg.draw(screen)
+            enemy.draw(screen)
+            player.draw(screen)
+            pygame.display.flip()
+            dt = clock.tick(24)
     pygame.quit()
     
 if __name__ == "__main__":
