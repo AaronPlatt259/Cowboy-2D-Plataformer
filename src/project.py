@@ -4,7 +4,7 @@ import random
 
 
 class Player:
-    def __init__(self ,x_axis=120, y_axis = 100, speed = 5):
+    def __init__(self ,x_axis=100, y_axis = 250, speed = 5):
         self.index = 0
         self.x_axis = x_axis
         self.y_axis = y_axis
@@ -33,10 +33,14 @@ class Player:
        
 
     def get_rectangle(self):
-        rectangle = self.img.get_rect(topleft=(100,250)) 
+        rectangle = self.img.get_rect(topleft=(self.x_axis,self.y_axis)) 
         return rectangle
+    
 
-    def update(self, keys):
+    def update(self, keys, enemy):
+        if self.pos.colliderect(enemy.pos):
+            print("collision activated")
+
         if keys [pygame.K_LEFT]:
            self.pos.x -= self.speed
            self.animate()
@@ -170,7 +174,7 @@ def main():
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         keys = pygame.key.get_pressed()
         bg.update_variation(keys)
-        player.update(keys)
+        player.update(keys, enemy)
         enemy.update(running)
         enemy.update_variation(keys)
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
