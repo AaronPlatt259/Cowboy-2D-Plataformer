@@ -4,7 +4,7 @@ import random
 
 
 class Player:
-    def __init__(self ,x_axis =100, y_axis = 250, x_speed = 5, jump_height = 20, y_speed = 20):
+    def __init__(self ,x_axis =100, y_axis = 250, x_speed = 7, jump_height = 20, y_speed = 20):
         self.index = 0
         self.is_jumping = False
         self.jump = jump_height
@@ -110,7 +110,7 @@ class Enemy:
     
     def get_rectangle(self):
         rectangle = self.img.get_rect(topleft=(600,360)) 
-        return rectangle
+        return rectangle.inflate(-45, -45)
     
     def update(self, running):
         if running == True:
