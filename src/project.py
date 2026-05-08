@@ -4,14 +4,17 @@ import random
 
 
 class Player:
-    def __init__(self ,x_axis=100, y_axis = 250, speed = 5):
+    def __init__(self ,x_axis =100, y_axis = 250, x_speed = 5, jump_height = 20, y_speed = 20):
         self.index = 0
+        self.is_jumping = False
+        self.jump = jump_height
+        self.jump_speed = y_speed
         self.x_axis = x_axis
         self.y_axis = y_axis
         self.idle_image = pygame.image.load('cowboy.png').convert_alpha()
         self.img = self.idle_image
         self.pos = self.get_rectangle()
-        self.speed = speed
+        self.speed = x_speed
         self.movement = [pygame.image.load('Timeline 1_0000.png').convert_alpha(),
                          pygame.image.load('Timeline 1_0001.png').convert_alpha(),
                          pygame.image.load('Timeline 1_0002.png').convert_alpha(),
@@ -47,6 +50,9 @@ class Player:
         elif keys [pygame.K_RIGHT]:
             self.pos.x += self.speed
             self.animate()
+        elif keys [pygame.K_UP]:
+            self.is_jumping = True
+            self.jumping()
         else:
             self.img = self.idle_image
             self.index = 0
@@ -57,7 +63,13 @@ class Player:
             self.index = 0
         self.img = self.movement[int(self.index)]
 
-
+    def jumping(self):
+        gravity = 1
+        if self.is_jumping:
+            self.pos.y -= self.jump_speed
+            self.jump_speed -= gravity
+            if self.jump_speed <- self.jump:
+                self.is_jumping = False
 
     def draw(self, surface):
         surface.blit(self.img, self.pos)
