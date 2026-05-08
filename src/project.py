@@ -41,18 +41,23 @@ class Player:
     
 
     def update(self, keys, enemy):
+        moving = False
         if self.pos.colliderect(enemy.pos):
             print("collision activated")
 
         if keys [pygame.K_LEFT]:
            self.pos.x -= self.speed
            self.animate()
+           moving = True
         elif keys [pygame.K_RIGHT]:
             self.pos.x += self.speed
             self.animate()
-        elif keys [pygame.K_UP] and not self.is_jumping:
+            moving = True
+        if keys [pygame.K_UP] and not self.is_jumping:
             self.is_jumping = True
-        else:
+            self.animate()
+
+        if not moving and not self.is_jumping:
             self.img = self.idle_image
             self.index = 0
         self.jumping()
