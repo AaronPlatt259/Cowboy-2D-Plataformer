@@ -50,12 +50,12 @@ class Player:
         elif keys [pygame.K_RIGHT]:
             self.pos.x += self.speed
             self.animate()
-        elif keys [pygame.K_UP]:
+        elif keys [pygame.K_UP] and not self.is_jumping:
             self.is_jumping = True
-            self.jumping()
         else:
             self.img = self.idle_image
             self.index = 0
+        self.jumping()
 
     def animate(self):
         self.index += 0.5
@@ -70,6 +70,7 @@ class Player:
             self.jump_speed -= gravity
             if self.jump_speed <- self.jump:
                 self.is_jumping = False
+                self.jump_speed = self.jump
 
     def draw(self, surface):
         surface.blit(self.img, self.pos)
