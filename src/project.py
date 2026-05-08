@@ -60,17 +60,31 @@ class Player:
 
 class Enemy:
     def __init__(self ,x_axis=120, y_axis = 100, speed = 5, enemy_update = 'enemy_01.png'):
+        self.index = 0
+        self.enemy_number = 2
         self.x_axis = x_axis
         self.y_axis = y_axis
+        self.idle_image = pygame.image.load('enemy_01.png').convert_alpha()
         self.enemy = enemy_update
-        self.img = self.load_image()
+        self.img = self.idle_image
         self.pos = self.get_rectangle()
         self.speed = speed
+        self.movement = [pygame.image.load(f'Timeline {self.enemy_number}_0000.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0000.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0001.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0003.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0004.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0005.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0006.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0007.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0008.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0009.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0010.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0011.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0012.png').convert_alpha(),
+                    pygame.image.load(f'Timeline {self.enemy_number}_0013.png').convert_alpha(),
+                    ]
         
-    def load_image(self):
-        img = pygame.image.load(self.enemy).convert_alpha()
-        #img = pygame.transform.scale(img, (self.x_axis//2, self.y_axis//2))
-        return img
     
     def get_rectangle(self):
         rectangle = self.img.get_rect(topleft=(600,360)) 
@@ -79,22 +93,29 @@ class Enemy:
     def update(self, running):
         if running == True:
             self.pos.x -= self.speed
+            self.animate()
 
     def update_variation(self, keys):
         variations = {
-          pygame.K_0: 'enemy_01.png',
-          pygame.K_1: 'enemy_02.png',
-          pygame.K_2: 'enemy_03.png'
+          pygame.K_0: 2,
+          pygame.K_1: 3,
+          pygame.K_2: 4
         }
+        
 
         for key, filename in variations.items():
             if keys[key]:
-                if self.enemy != filename:
-                    self.enemy = filename
-                    self.img = self.load_image()
+                if self.enemy_number != filename:
+                    self.enemy_number = filename
+                    self.img = self.idle_image
                 break
 
-    
+    def animate(self):
+        self.index += 0.5
+        if self.index >= 13:
+            self.index = 0
+        self.img = self.movement[int(self.index)]
+
     def draw(self, surface):
         surface.blit(self.img, self.pos)
 
