@@ -110,7 +110,7 @@ class Enemy:
     
     def get_rectangle(self):
         rectangle = self.img.get_rect(topleft=(600,360)) 
-        return rectangle.inflate(-45, -45)
+        return rectangle#.inflate(-45, -45)
     
     def update(self, running):
         if running == True:
