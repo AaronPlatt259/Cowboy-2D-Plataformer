@@ -1,20 +1,37 @@
 import pygame
+import os
 import random
 
 
 class Player:
     def __init__(self ,x_axis=120, y_axis = 100, speed = 5):
+        self.index = 0
         self.x_axis = x_axis
         self.y_axis = y_axis
-        self.img = self.load_image()
+        self.idle_image = pygame.image.load('cowboy.png').convert_alpha()
+        self.img = self.idle_image
         self.pos = self.get_rectangle()
         self.speed = speed
+        self.movement = [pygame.image.load('Timeline 1_0000.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0001.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0002.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0003.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0004.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0005.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0006.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0007.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0008.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0009.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0010.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0011.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0012.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0013.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0014.png').convert_alpha(),
+                         pygame.image.load('Timeline 1_0015.png').convert_alpha(),
+                         
+                         ]
        
-    def load_image(self):
-        img = pygame.image.load('cowboy.png').convert_alpha()
-        #img = pygame.transform.scale(img, (self.x_axis//2, self.y_axis//2))
-        return img
-    
+
     def get_rectangle(self):
         rectangle = self.img.get_rect(topleft=(100,250)) 
         return rectangle
@@ -22,8 +39,20 @@ class Player:
     def update(self, keys):
         if keys [pygame.K_LEFT]:
            self.pos.x -= self.speed
-        if keys [pygame.K_RIGHT]:
+           self.animate()
+        elif keys [pygame.K_RIGHT]:
             self.pos.x += self.speed
+            self.animate()
+        else:
+            self.img = self.idle_image
+            self.index = 0
+
+    def animate(self):
+        self.index += 0.5
+        if self.index >= 15:
+            self.index = 0
+        self.img = self.movement[int(self.index)]
+
 
 
     def draw(self, surface):
