@@ -256,21 +256,28 @@ def main():
                 running = False
 
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        if not game_over or not game_completed:
+        if not game_over and not game_completed:
             keys = pygame.key.get_pressed()
             bg.update_variation(keys)
             player.update(keys, enemy)
             enemy.update(running)
             enemy.update_variation(keys)
             camera.scroll()
+
+            if player.pos.colliderect(finish.pos):
+                game_completed = True
+
+            if player.pos.colliderect(enemy.pos):
+                print("collision activated")
+                game_over = True
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+        screen.fill('Black')
         if game_completed:
             screen.fill('Yellow')
-        if game_over:
+        elif game_over:
             screen.fill('Black')
             lose_screen.draw(screen)
         else:
-            screen.fill('Black')
             bg.draw(screen, camera)
             enemy.draw(screen, camera)
             player.draw(screen, camera)
@@ -278,12 +285,7 @@ def main():
         pygame.display.flip()
         dt = clock.tick(24)
         
-        if player.pos.colliderect(finish.pos):
-            game_completed = True
 
-        if player.pos.colliderect(enemy.pos):
-            print("collision activated")
-            game_over = True
         
 
     pygame.quit()
