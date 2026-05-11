@@ -130,7 +130,10 @@ class Enemy:
             if keys[key]:
                 if self.enemy_number != filename:
                     self.enemy_number = filename
-                    self.img = self.idle_image
+                    self.movement = [
+                        pygame.image.load(f'Timeline {self.enemy_number}_{i:04d}.png').convert_alpha()
+                        for i in range(13)
+                    ]
                 break
 
     def animate(self):
