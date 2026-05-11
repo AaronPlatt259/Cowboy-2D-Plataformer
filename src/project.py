@@ -281,7 +281,7 @@ def main():
             bg.draw(screen, camera)
             enemy.draw(screen, camera)
             player.draw(screen, camera)
-            finish.draw(screen, camera)
+            #finish.draw(screen, camera)
         pygame.display.flip()
         dt = clock.tick(24)
         
