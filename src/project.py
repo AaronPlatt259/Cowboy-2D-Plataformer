@@ -142,6 +142,16 @@ class Enemy:
     def draw(self, surface):
         surface.blit(self.img, self.pos)
 
+class Game_over_screen:
+    def __init__(self ,x_axis =100, y_axis = 250, pos = (0,0)):
+        self.img = pygame.image.load('game over screen.png').convert_alpha()
+        self.pos = pos
+
+    def draw(self, surface):
+        surface.blit(self.img, self.pos)
+
+    
+
 class Background:
         def __init__(self, pos=(0,0),x_axis=120, y_axis = 100, bg_update = 'bg_01.jpg'):
             self.x_axis = x_axis
@@ -183,6 +193,7 @@ def main():
     player = Player()
     bg = Background(pos=(0,0))
     enemy = Enemy()
+    lose_screen = Game_over_screen()
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     running = True
     while running:
@@ -201,7 +212,8 @@ def main():
         
         if game_over:
             screen.fill('Black')
-            pygame.image.load('game over.png').convert_alpha()
+            lose_screen.draw(screen)
+
         else:
             screen.fill('Black')
             bg.draw(screen)
