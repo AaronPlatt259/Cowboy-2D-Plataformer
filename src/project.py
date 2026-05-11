@@ -159,7 +159,7 @@ class Game_over_screen:
 
 class FinishingLine:
     def __init__(self):
-        self.pos = pygame.Rect(2980, 250, 10, 600)
+        self.pos = pygame.Rect(3100, 250, 10, 600)
     
     def draw(self, surface, camera):
         pygame.draw.rect(surface, (255, 255, 255), (self.pos.x - camera.offset.x, self.pos.y, self.pos.width, self.pos.height))
@@ -230,6 +230,7 @@ class Background:
 
         def draw(self, surface, camera):
             surface.blit(self.ground,(self.pos[0] - camera.offset.x, self.pos[1]))
+
 def main():
     pygame.init()
     pygame.display.set_caption("Cowboy Game")
@@ -239,6 +240,7 @@ def main():
     screen = pygame.display.set_mode(resolution)
     game_over = False
     game_completed = False
+    fullscreen = False
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     player = Player()
     bg = Background(pos=(0,0))
@@ -254,6 +256,15 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    fullscreen = not fullscreen
+                    if fullscreen:
+                        screen = pygame.display.set_mode((resolution), pygame.FULLSCREEN | pygame.SCALED)
+                    else:
+                        screen =  pygame.display.set_mode(resolution)
 
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         if not game_over and not game_completed:
