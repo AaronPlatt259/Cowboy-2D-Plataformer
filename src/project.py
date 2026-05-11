@@ -2,7 +2,7 @@ import pygame
 import os
 import random
 
-
+vec = pygame.math.Vector2
 class Player:
     def __init__(self ,x_axis =100, y_axis = 250, x_speed = 7, jump_height = 20, y_speed = 20):
         self.index = 0
@@ -153,7 +153,30 @@ class Game_over_screen:
     def draw(self, surface):
         surface.blit(self.img, self.pos)
 
-    
+class Camera:
+    def __init__(self, player):
+        self.player = player
+        self.display_width, self.display_height = 600, 800
+        self.offset = vec(0, 0)
+        self.offset_float = vec(0, 0)
+        self.constant = vec(self.display_width / 2 + player.pos.x / 2, 600 + 20)
+        
+
+    def set_method(self, method):
+        self.method = method
+
+    def scroll(self):
+        self.method.scroll()
+
+
+class CameraScroll:
+    def __init__(self, camera, player): 
+        self.camera = camera
+        self.player = player
+
+    def scroll(self):
+        self.camera.offset_float.x += (self.player.pos.x - self.camera.offset_float.x + self.camera.constant.x)
+        self.camera.offset.x = int(self.camera.offset_float.x)
 
 class Background:
         def __init__(self, pos=(0,0),x_axis=120, y_axis = 100, bg_update = 'bg_01.jpg'):
@@ -197,6 +220,9 @@ def main():
     bg = Background(pos=(0,0))
     enemy = Enemy()
     lose_screen = Game_over_screen()
+    camera = Camera(player)
+    scroll = CameraScroll(camera, player)
+    camera.set_method(scroll)
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     running = True
     while running:
@@ -211,6 +237,7 @@ def main():
             player.update(keys, enemy)
             enemy.update(running)
             enemy.update_variation(keys)
+            camera.scroll()
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
         
         if game_over:
