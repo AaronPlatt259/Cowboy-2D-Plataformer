@@ -78,8 +78,8 @@ class Player:
                 self.is_jumping = False
                 self.jump_speed = self.jump
 
-    def draw(self, surface):
-        surface.blit(self.img, self.pos)
+    def draw(self, surface, camera):
+        surface.blit(self.img,(self.pos.x - camera.offset.x, self.pos.y))
 
 class Enemy:
     def __init__(self ,x_axis=120, y_axis = 100, speed = 5, enemy_update = 'enemy_01.png'):
@@ -142,8 +142,8 @@ class Enemy:
             self.index = 0
         self.img = self.movement[int(self.index)]
 
-    def draw(self, surface):
-        surface.blit(self.img, self.pos)
+    def draw(self, surface, camera):
+        surface.blit(self.img,(self.pos.x - camera.offset.x, self.pos.y))
 
 class Game_over_screen:
     def __init__(self ,x_axis =100, y_axis = 250, pos = (0,0)):
@@ -156,10 +156,11 @@ class Game_over_screen:
 class Camera:
     def __init__(self, player):
         self.player = player
-        self.display_width, self.display_height = 600, 800
+        self.display_width, self.display_height = 800, 600
+        self.modify_width = 280
         self.offset = vec(0, 0)
         self.offset_float = vec(0, 0)
-        self.constant = vec(self.display_width / 2 + player.pos.x / 2, 600 + 20)
+        self.constant = vec(self.modify_width, self.display_height / 2)
         
 
     def set_method(self, method):
@@ -173,9 +174,19 @@ class CameraScroll:
     def __init__(self, camera, player): 
         self.camera = camera
         self.player = player
+        self.bg_width = 3200
 
     def scroll(self):
-        self.camera.offset_float.x += (self.player.pos.x - self.camera.offset_float.x + self.camera.constant.x)
+        player_center = self.player.pos.x + (self.player.img.get_width() / 1)
+        self.camera.offset_float.x += (player_center - self.camera.offset_float.x - self.camera.constant.x) / 20
+
+        if self.camera.offset_float.x < 0:
+            self.camera.offset_float.x = 0
+
+        max_scroll = self.bg_width - self.camera.display_width
+        if self.camera.offset_float.x > max_scroll:
+            self.camera.offset_float.x = max_scroll
+
         self.camera.offset.x = int(self.camera.offset_float.x)
 
 class Background:
@@ -185,6 +196,7 @@ class Background:
             self.bg = bg_update
             self.pos = pos
             self.ground = self.image()
+            
        
         def image(self):
             img = pygame.image.load(self.bg)
@@ -205,8 +217,8 @@ class Background:
                         self.ground = self.image()
                     break
 
-        def draw(self, surface):
-            surface.blit(self.ground, self.pos)
+        def draw(self, surface, camera):
+            surface.blit(self.ground,(self.pos[0] - camera.offset.x, self.pos[1]))
 def main():
     pygame.init()
     pygame.display.set_caption("Cowboy Game")
@@ -246,9 +258,9 @@ def main():
 
         else:
             screen.fill('Black')
-            screen.blit(bg.ground,(bg.pos[0] - camera.offset.x, bg.pos[1]))
-            screen.blit(enemy.img,(enemy.pos.x - camera.offset.x, enemy.pos.y))
-            screen.blit(player.img,(player.pos.x - camera.offset.x, player.pos.y))
+            bg.draw(screen, camera)
+            enemy.draw(screen, camera)
+            player.draw(screen, camera)
         pygame.display.flip()
         dt = clock.tick(24)
 
