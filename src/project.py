@@ -246,9 +246,9 @@ def main():
 
         else:
             screen.fill('Black')
-            bg.draw(screen)
-            enemy.draw(screen)
-            player.draw(screen)
+            screen.blit(bg.ground,(bg.pos[0] - camera.offset.x, bg.pos[1]))
+            screen.blit(enemy.img,(enemy.pos.x - camera.offset.x, enemy.pos.y))
+            screen.blit(player.img,(player.pos.x - camera.offset.x, player.pos.y))
         pygame.display.flip()
         dt = clock.tick(24)
 
