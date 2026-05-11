@@ -153,6 +153,17 @@ class Game_over_screen:
     def draw(self, surface):
         surface.blit(self.img, self.pos)
 
+
+    def draw(self, surface):
+        surface.blit(self.img, self.pos)
+
+class FinishingLine:
+    def __init__(self):
+        self.pos = pygame.Rect(2980, 250, 10, 600)
+    
+    def draw(self, surface, camera):
+        pygame.draw.rect(surface, (255, 255, 255), (self.pos.x - camera.offset.x, self.pos.y, self.pos.width, self.pos.height))
+    
 class Camera:
     def __init__(self, player):
         self.player = player
@@ -227,6 +238,7 @@ def main():
     resolution = (800, 600)
     screen = pygame.display.set_mode(resolution)
     game_over = False
+    game_completed = False
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     player = Player()
     bg = Background(pos=(0,0))
@@ -234,6 +246,7 @@ def main():
     lose_screen = Game_over_screen()
     camera = Camera(player)
     scroll = CameraScroll(camera, player)
+    finish = FinishingLine()
     camera.set_method(scroll)
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     running = True
@@ -243,7 +256,7 @@ def main():
                 running = False
 
      #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        if not game_over:
+        if not game_over or not game_completed:
             keys = pygame.key.get_pressed()
             bg.update_variation(keys)
             player.update(keys, enemy)
@@ -251,18 +264,22 @@ def main():
             enemy.update_variation(keys)
             camera.scroll()
 #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-        
+        if game_completed:
+            screen.fill('Yellow')
         if game_over:
             screen.fill('Black')
             lose_screen.draw(screen)
-
         else:
             screen.fill('Black')
             bg.draw(screen, camera)
             enemy.draw(screen, camera)
             player.draw(screen, camera)
+            finish.draw(screen, camera)
         pygame.display.flip()
         dt = clock.tick(24)
+        
+        if player.pos.colliderect(finish.pos):
+            game_completed = True
 
         if player.pos.colliderect(enemy.pos):
             print("collision activated")
