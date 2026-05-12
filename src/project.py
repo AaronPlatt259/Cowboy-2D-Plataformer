@@ -4,7 +4,7 @@ import random
 
 vec = pygame.math.Vector2
 class Player:
-    def __init__(self ,x_axis =100, y_axis = 250, x_speed = 7, jump_height = 20, y_speed = 20):
+    def __init__(self ,x_axis =100, y_axis = 250, x_speed = 7, jump_height = 22, y_speed = 22):
         self.index = 0
         self.is_jumping = False
         self.jump = jump_height
@@ -90,7 +90,7 @@ class Platform:
         
     
     def get_rectangle(self):
-        rectangle = self.img.get_rect(topleft=(1700,89)) 
+        rectangle = self.img.get_rect(topleft=(1700,250)) 
         return rectangle
     
     def update_variation(self, keys):
