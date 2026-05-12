@@ -41,28 +41,28 @@ class Player:
     
 
     def update(self, keys, enemy, platforms):
-        moving = False
-        #if self.pos.colliderect(enemy.pos):
-            #print("collision activated")
+            moving = False
+            
+            if keys[pygame.K_LEFT]:
+                self.pos.x -= self.speed
+                self.animate()
+                moving = True
+            elif keys[pygame.K_RIGHT]:
+                self.pos.x += self.speed
+                self.animate()
+                moving = True
+                
+            if keys[pygame.K_UP] and not self.is_jumping:
+                self.is_jumping = True
+                self.jump_speed = self.jump
+                self.animate()
 
+            if not moving and not self.is_jumping:
+                self.img = self.idle_image
+                self.index = 0
 
-        if keys [pygame.K_LEFT]:
-           self.pos.x -= self.speed
-           self.animate()
-           moving = True
-        elif keys [pygame.K_RIGHT]:
-            self.pos.x += self.speed
-            self.animate()
-            moving = True
-        if keys [pygame.K_UP] and not self.is_jumping:
-            self.is_jumping = True
-            self.jump_speed = self.jump
-            self.animate()
-
-        if not moving and not self.is_jumping:
-            self.img = self.idle_image
-            self.index = 0
-        self.jumping(platforms)
+            # THIS IS THE MOVE: Align this with the "if" blocks
+            self.jumping(platforms)
 
     def animate(self):
         self.index += 0.5
@@ -75,10 +75,15 @@ class Player:
         self.pos.y -= self.jump_speed
         self.jump_speed -= gravity
 
-        if self.pos.bottom > self.y_axis:
-            self.bottom = self.y_axis
+        if self.pos.bottom >= self.y_axis:
+            self.pos.bottom = self.y_axis
             self.jump_speed = 0
             self.is_jumping = False
+
+        on_ground = False
+        if self.pos.bottom == self.y_axis:
+            on_ground = True 
+           
 
         for platform in platforms:
             if self.pos.colliderect(platform.pos):
@@ -86,6 +91,10 @@ class Player:
                     self.pos.bottom = platform.pos.top
                     self.jump_speed = 0
                     self.is_jumping = False
+                    on_ground = True
+
+        if not on_ground:
+            self.is_jumping = True
 
     def draw(self, surface, camera):
         surface.blit(self.img,(self.pos.x - camera.offset.x, self.pos.y))
