@@ -10,7 +10,7 @@ class Player:
         self.jump = jump_height
         self.jump_speed = 0
         self.x_axis = x_axis
-        self.y_axis = y_axis
+        self.y_axis = 500
         self.idle_image = pygame.image.load('cowboy.png').convert_alpha()
         self.img = self.idle_image
         self.pos = self.get_rectangle()
@@ -61,7 +61,6 @@ class Player:
                 self.img = self.idle_image
                 self.index = 0
 
-            # THIS IS THE MOVE: Align this with the "if" blocks
             self.jumping(platforms)
 
     def animate(self):
@@ -75,19 +74,18 @@ class Player:
         self.pos.y -= self.jump_speed
         self.jump_speed -= gravity
 
+        on_ground = False
+
         if self.pos.bottom >= self.y_axis:
             self.pos.bottom = self.y_axis
             self.jump_speed = 0
             self.is_jumping = False
-
-        on_ground = False
-        if self.pos.bottom == self.y_axis:
             on_ground = True 
            
 
         for platform in platforms:
             if self.pos.colliderect(platform.pos):
-                if self.jump_speed <= 0:
+                if self.jump_speed <= 0 and self.pos.bottom <= platform.pos.top + 15:
                     self.pos.bottom = platform.pos.top
                     self.jump_speed = 0
                     self.is_jumping = False
@@ -105,10 +103,12 @@ class Platform:
         self.plat = platform_variations
         self.img = pygame.image.load(self.plat).convert_alpha()
         self.pos = self.get_rectangle()
-        
+        self.hitbox = self.pos.inflate(0, -20)
+        self.hitbox.bottom = self.pos.bottom
     
     def get_rectangle(self):
-        rectangle = self.img.get_rect(topleft=(1700,250)) 
+        rectangle = self.img.get_rect(topleft=(1700,250))
+
         return rectangle
     
     def update_variation(self, keys):
@@ -123,7 +123,9 @@ class Platform:
                 if self.plat != filename:
                     self.plat = filename
                     self.img = pygame.image.load(self.plat).convert_alpha()
-                    self.pos = self.img.get_rect(topleft=(1700,250)) 
+                    self.pos = self.img.get_rect(topleft=(1700,250))
+                    self.hitbox = self.pos.inflate(0, -20) 
+                    self.hitbox.bottom = self.pos.bottom
                 break
 
     def draw(self, surface, camera):
