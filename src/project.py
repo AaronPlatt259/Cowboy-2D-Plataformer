@@ -197,6 +197,18 @@ class Enemy:
     def draw(self, surface, camera):
         surface.blit(self.img,(self.pos.x - camera.offset.x, self.pos.y))
 
+class You_Win_screen:
+    def __init__(self ,x_axis =100, y_axis = 250, pos = (0,0)):
+        self.img = pygame.image.load('win_screen.jpg')
+        self.pos = pos
+
+    def draw(self, surface):
+        surface.blit(self.img, self.pos)
+
+
+    def draw(self, surface):
+        surface.blit(self.img, self.pos)
+
 class Game_over_screen:
     def __init__(self ,x_axis =100, y_axis = 250, pos = (0,0)):
         self.img = pygame.image.load('game over screen.png').convert_alpha()
