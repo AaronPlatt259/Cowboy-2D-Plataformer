@@ -4,11 +4,11 @@ import random
 
 vec = pygame.math.Vector2
 class Player:
-    def __init__(self ,x_axis =100, y_axis = 250, x_speed = 7, jump_height = 22, y_speed = 22):
+    def __init__(self ,x_axis =100, y_axis = 250, x_speed = 7, jump_height = 22):
         self.index = 0
         self.is_jumping = False
         self.jump = jump_height
-        self.jump_speed = y_speed
+        self.jump_speed = 0
         self.x_axis = x_axis
         self.y_axis = y_axis
         self.idle_image = pygame.image.load('cowboy.png').convert_alpha()
@@ -40,7 +40,7 @@ class Player:
         return rectangle
     
 
-    def update(self, keys, enemy):
+    def update(self, keys, enemy, platforms):
         moving = False
         #if self.pos.colliderect(enemy.pos):
             #print("collision activated")
@@ -56,12 +56,13 @@ class Player:
             moving = True
         if keys [pygame.K_UP] and not self.is_jumping:
             self.is_jumping = True
+            self.jump_speed = self.jump
             self.animate()
 
         if not moving and not self.is_jumping:
             self.img = self.idle_image
             self.index = 0
-        self.jumping()
+        self.jumping(platforms)
 
     def animate(self):
         self.index += 0.5
@@ -69,14 +70,22 @@ class Player:
             self.index = 0
         self.img = self.movement[int(self.index)]
 
-    def jumping(self):
+    def jumping(self, platforms):
         gravity = 1
-        if self.is_jumping:
-            self.pos.y -= self.jump_speed
-            self.jump_speed -= gravity
-            if self.jump_speed <- self.jump:
-                self.is_jumping = False
-                self.jump_speed = self.jump
+        self.pos.y -= self.jump_speed
+        self.jump_speed -= gravity
+
+        if self.pos.bottom > self.y_axis:
+            self.bottom = self.y_axis
+            self.jump_speed = 0
+            self.is_jumping = False
+
+        for platform in platforms:
+            if self.pos.colliderect(platform.pos):
+                if self.jump_speed <= 0:
+                    self.pos.bottom = platform.pos.top
+                    self.jump_speed = 0
+                    self.is_jumping = False
 
     def draw(self, surface, camera):
         surface.blit(self.img,(self.pos.x - camera.offset.x, self.pos.y))
@@ -105,6 +114,7 @@ class Platform:
                 if self.plat != filename:
                     self.plat = filename
                     self.img = pygame.image.load(self.plat).convert_alpha()
+                    self.pos = self.img.get_rect(topleft=(1700,250)) 
                 break
 
     def draw(self, surface, camera):
@@ -303,7 +313,7 @@ def main():
             keys = pygame.key.get_pressed()
             bg.update_variation(keys)
             platform.update_variation(keys)
-            player.update(keys, enemy)
+            player.update(keys, enemy, [platform])
             enemy.update(running)
             enemy.update_variation(keys)
             camera.scroll()
