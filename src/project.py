@@ -81,6 +81,37 @@ class Player:
     def draw(self, surface, camera):
         surface.blit(self.img,(self.pos.x - camera.offset.x, self.pos.y))
 
+class Platform:
+    def __init__(self, platform_variations = 'plataform_01.png'):
+
+        self.plat = platform_variations
+        self.img = pygame.image.load(self.plat).convert_alpha()
+        self.pos = self.get_rectangle()
+        
+    
+    def get_rectangle(self):
+        rectangle = self.img.get_rect(topleft=(1700,89)) 
+        return rectangle
+    
+    def update_variation(self, keys):
+        variations = {
+        pygame.K_3: 'plataform_01.png',
+        pygame.K_4: 'plataform_02.png',
+        pygame.K_5: 'plataform_03.png'
+        }
+        
+        for key, filename in variations.items():
+            if keys[key]:
+                if self.plat != filename:
+                    self.plat = filename
+                    self.img = pygame.image.load(self.plat).convert_alpha()
+                break
+
+    def draw(self, surface, camera):
+        surface.blit(self.img,(self.pos[0] - camera.offset.x, self.pos[1]))    
+
+
+
 class Enemy:
     def __init__(self ,x_axis=120, y_axis = 100, speed = 5, enemy_update = 'enemy_01.png'):
         self.index = 0
@@ -243,6 +274,7 @@ def main():
     fullscreen = False
     #- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
     player = Player()
+    platform = Platform()
     bg = Background(pos=(0,0))
     enemy = Enemy()
     lose_screen = Game_over_screen()
@@ -270,6 +302,7 @@ def main():
         if not game_over and not game_completed:
             keys = pygame.key.get_pressed()
             bg.update_variation(keys)
+            platform.update_variation(keys)
             player.update(keys, enemy)
             enemy.update(running)
             enemy.update_variation(keys)
@@ -290,9 +323,11 @@ def main():
             lose_screen.draw(screen)
         else:
             bg.draw(screen, camera)
+            platform.draw(screen, camera)
             enemy.draw(screen, camera)
             player.draw(screen, camera)
             #finish.draw(screen, camera)
+
         pygame.display.flip()
         dt = clock.tick(24)
         
