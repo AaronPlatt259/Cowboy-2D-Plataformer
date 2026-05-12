@@ -311,6 +311,7 @@ def main():
     bg = Background(pos=(0,0))
     enemy = Enemy()
     lose_screen = Game_over_screen()
+    win_screen = You_Win_screen()
     camera = Camera(player)
     scroll = CameraScroll(camera, player)
     finish = FinishingLine()
@@ -351,6 +352,7 @@ def main():
         screen.fill('Black')
         if game_completed:
             screen.fill('Yellow')
+            win_screen.draw(screen)
         elif game_over:
             screen.fill('Black')
             lose_screen.draw(screen)
