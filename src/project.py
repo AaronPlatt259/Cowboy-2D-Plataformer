@@ -162,7 +162,7 @@ class Enemy:
         
     
     def get_rectangle(self):
-        rectangle = self.img.get_rect(topleft=(600,342)) 
+        rectangle = self.img.get_rect(topleft=(800,342)) 
         return rectangle.inflate(-55, -55)
     
     def update(self, running):
