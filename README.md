@@ -13,3 +13,15 @@ https://github.com/AaronPlatt259/Cowboy-2D-Plataformer.git <URL>
 ## Definitivelly this was an interesting experience, I would want to learn more for next time and improve my learning flow for the things that I didn't know before starting the project. 
 
 ## Overall I loved this project and I felt pride when I saw the characters moving with such life, this was a very fun experience.
+
+## Links of videos that helped me
+https://www.youtube.com/watch?v=MYaxPa_eZS0&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7 <URL>
+https://www.youtube.com/watch?v=XmSv2V69Y7A&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7&index=2 <URL>
+https://www.youtube.com/watch?v=ZlgNM1pALrI&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7&index=3 <URL>
+https://www.youtube.com/watch?v=ST-Qq3WBZBE&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7&index=4 <URL>
+https://www.youtube.com/watch?v=kmO5UAb6Vgw&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7&index=5 <URL>
+https://www.youtube.com/watch?v=ARt6DLP38-Y&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7&index=6 <URL>
+https://www.youtube.com/watch?v=g-SDWlYXjC8&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7&index=7 <URL>
+https://www.youtube.com/watch?v=PjgLeP0G5Yw&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7&index=8 <URL>
+https://www.youtube.com/watch?v=BHr9jxKithk&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7&index=9 <URL>
+https://www.youtube.com/watch?v=tJiKYMQJnYg&list=PLOJodyWg7P6qsRkK4f3gzfi668nPyQSf7&index=10 <URL>
