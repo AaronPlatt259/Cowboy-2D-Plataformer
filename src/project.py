@@ -1,6 +1,4 @@
 import pygame
-import os
-import random
 
 vec = pygame.math.Vector2
 class Player:
